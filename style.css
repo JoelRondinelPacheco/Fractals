@@ -1,18 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&family=Titan+One&display=swap");
 html,
 body {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+.nav-container {
+  display: flex;
+  background-color: #997f23;
+  padding: 10px 50px;
+}
+
+.nav-container h1 {
+  color: white;
+  font-family: "Titan One", "sans-serif";
 }
 canvas {
   display: block;
 }
 
 .main-container {
-  background-color: rgb(113, 128, 212);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.info-container {
+  font-family: "Josefin Sans", "sans-seif";
+  margin-top: 25px;
+}
+
+p {
+  font-size: 25px;
+  margin: 5px;
+  color: #121212;
 }
 
 canvas {
