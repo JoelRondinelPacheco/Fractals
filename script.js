@@ -1,5 +1,63 @@
-const canvas = document.getElementById("main-canvas");
-var ctx = canvas.getContext('2d');
+// Quede en minuto 20 https://www.youtube.com/watch?v=uCH1ta5OUHw
+
+var canvas;
+var ctx;
+var fractal;
+var fractalAnimation
+
+windows.onload = function () {
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext('2d');
+    canvas.width = 1000;
+    canvas.height = 800;
+    fractal = new FractalGenerator(ctx, canvas.width, canvas.height);
+    fractal.animate();
+}
+
+//Para que sea responsive
+window.addEventListener('resize', function () {
+    //Cancelar la animacion anterior
+    this.cancelAnimationFrame(fractalAnimation);
+    //Para pantalla completa, buscar ocmo se hace cuando sta dentro de por ejmplo un div
+    //canvas.width = window.innerWidth;
+    //canvas.height = window.innerHeight:
+    //Ademas cuando cambia el tamaño, se crea otra instancia
+    fractal = new FractalGenerator(ctx, canvas.width, canvas.height);
+    //Y se anima de nuevo
+    fractal.animate();
+})
+
+
+class FractalGenerator {
+    #ctx;
+    #width;
+    #height;
+    constructor(ctx, width, height) {
+        this.#ctx = ctx;
+        this.#width = width;
+        this.height = height;
+        /*Y oras configuraciones*/
+    }
+    #draw(/*parametros*/) {
+        /*Logica con los parametros de entrar*/
+        /*Puede ser la logica del fractal
+        se ejecuta cuando se llama*/
+    }
+    animate() {
+        //La siguiente linea limpia elcanvas entre cada frame, asi por ejemplo se ve el movimiento
+        this.#ctx.clearRect(0, 0, this.width, this.height);
+        /*LLamma ala funcion privada*/
+        this.#draw();
+        /*PAra animar se repite la llamada a animate con -requestAnimationFrame-*/
+        //requestAnimationFrame(animate);
+        //Como esta en el renglon anterior de error
+        //requestAnimationFrame(this.animate)
+        //Tambien la linea anterior da error, hay que usar bind
+        //Para cancelar la animacion anterior al renderizar
+        fractalAnimation = requestAnimationFrame(this.animate.bind(this));
+    }
+}
+
 
 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
