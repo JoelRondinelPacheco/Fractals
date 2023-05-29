@@ -1,120 +1,123 @@
-var canvas;
-var ctx;
-var fractal;
-var fractalAnimation
+const canvas = document.getElementById('canvasF');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+console.log(canvas.height)
+console.log(innerWidth)
+const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+var dataP = imageData.data
 
-window.onload = function () {
+const color1 = document.getElementById('color1');
+const color2 = document.getElementById('color2');
+const boton = document.getElementById('setcolores');
+const slider = document.getElementById('slider')
+const slidery = document.getElementById('slidery')
+//canvas.focus();
 
-    //canvas.width = 100%;
-    //canvas.height =100%;
-    // TODO Comprobar que se reinicie la animacion con el cambio de ventana
-    //fractal = new FractalGenerator(ctx, canvas.width, canvas.height);
-    //  fractal.animate(0);
+var rojo = []
+var verde = []
+var azul = []
+function setColores(maxIteraciones, colores) {
+    for (let n = 0; n < maxIteraciones; n++) {
+        var inter = n / maxIteraciones;
+        var R = Math.trunc((1 - inter) * colores[0].r + inter * colores[1].r)
+        var G = Math.trunc((1 - inter) * colores[0].g + inter * colores[1].g)
+        var B = Math.trunc((1 - inter) * colores[0].b + inter * colores[1].b)
+        rojo[n] = R;
+        verde[n] = G;
+        azul[n] = B;
+    }
 }
-canvas = document.getElementById("canvas");
-function iterarCanva(canvasParam, anchoNumReales, iteracionesMaximo, ca, cb) {
-    //TODO VERFICACION QUE SEA UN CANVA
-    var canvasWidth = canvasParam.width;
-    var canvasHeight = canvasParam.height;
-    var anchoNumReales = 5; //puede ser un parametro, casi el unico de entrada en lo que es tamaño
-    var altoNumImag = anchoNumReales * canvasHeight / canvasWidth;
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+//Pina el canva, renderizar
+boton.addEventListener('click', function () {
+    var colorA2 = hexToRgb(color1.value);
+    var colorB2 = hexToRgb(color2.value);
+    console.log("A: " + colorA2.r, colorA2.g, colorA2.b + ", B: " + colorB2)
+    var colores = [colorA2, colorB2];
+    setColores(maxIt, colores);
+    renderizar(yMin, xMin)
+})
+slider.addEventListener('input', function (event) {
+    const value = Number(event.target.value)
+    //renderizar(yMin, xMin, value, cb);
+    console.log(value)
+    //ctx.clearRect(0, 0, innerWidth, innerHeight);
+    renderizar(yMin, xMin, value, 0);
+});
+slidery.addEventListener('input', function (event) {
+    const valueb = Number(event.target.value)
+    //renderizar(yMin, xMin, value, cb);
+    console.log(valueb)
+    //ctx.clearRect(0, 0, innerWidth, innerHeight);
+    renderizar(yMin, xMin, ca, valueb);
+});
+//var movax
+//var movY;
+//Ancho y alto
+var w = 6
+var h = (w) * canvas.height / canvas.width
+movax = 100 * w / canvas.width
 
-    var realMinimo = -1 * anchoNumReales * 0.5;
-    var imaginarioMinimo = -1 * altoNumImag * 0.5;
-    var realMaximo = realMinimo + anchoNumReales;
-    var imaginarioMaximo = imaginarioMinimo + altoNumImag;
+//Inicio
+var xMin = - w / 2
+var yMin = - h / 2
+let xMax = xMin + w
+let yMax = yMin + h
+//Incrementos
+var incrX = (xMax - xMin) / canvas.width
+var incrY = (yMax - yMin) / canvas.height
+//Variables iniciales
+var ca1 = 0.35;
+var cb1 = 0.2;
+const maxIt = 40;
+setColores(maxIt, [{ r: 255, g: 0, b: 0 }, { r: 0, g: 0, b: 255 }]);
 
-    var incrementoReal = (realMaximo - realMaximo) / canvasWidth;
-    var incrementoImaginario = (imaginarioMaximo - imaginarioMinimo) / canvasHeight;
-
-    var ctx = canvasParam.getContext('2d');
-    const datosCanvas = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
-    const pixeles = datosCanvas.data;
-
-    var y = imaginarioMinimo;
-    for (var i = 0; i < canvasHeight; i++) {
-        var x = realMinimo;
-        for (var j = 0; i < canvasWidth; j++) {
-            var realActual = x;
-            var imaginarioActual = y;
-            var controladorIteraciones = 0;
-
-            while (controladorIteraciones < iteracionesMaximo) {
-                var realAlCuadrado = realActual * realActual;
-                var imaginarioAlCuadrado = imaginarioActual * imaginarioActual;
-
-                if ((realAlCuadrado + imaginarioAlCuadrado) > 100) {
+function renderizar(yMinimo, xMinimo, cReal, cImaginaria) {
+    console.log('Seejectuo')
+    var y = yMinimo
+    for (let j = 0; j < canvas.height; j++) {
+        var x = xMinimo
+        for (let i = 0; i < canvas.width; i++) {
+            var a = x
+            var b = y
+            var nm = 0
+            while (nm < maxIt) {
+                var aa = a * a
+                var bb = b * b
+                if ((aa + bb) > 5) {
                     break;
                 }
+                let dosab = 2 * a * b
+                a = aa - bb + cReal
+                b = dosab + cImaginaria
+                nm++
+            }
+            let pix = (i + j * canvas.width) * 4
 
-                let dosRealImag = 2 * realActual * imaginarioActual
-                realActual = realAlCuadrado - imaginarioAlCuadrado + ca
-                imaginarioActual = dosRealImag + cb
-                controladorIteraciones++
+            if (nm == maxIt) {
+                dataP[pix + 0] = 0
+                dataP[pix + 1] = 0
+                dataP[pix + 2] = 0
+                dataP[pix + 3] = 255
+            } else {
+                dataP[pix + 0] = rojo[nm]
+                dataP[pix + 1] = verde[nm]
+                dataP[pix + 2] = azul[nm]
+                dataP[pix + 3] = 255
             }
-            var interpolado = Math.round(controladorIteraciones * 360 / iteracionesMaximo)
-            var vect = rgb([interpolado, 100, 50]);
-            let posicion = (i + j * canvas.width) * 4
-            for (var k = 0; k < 4; k++) {
-                pixeles[posicion + k] = vect[k];
-            }
-            pixeles[posicion + 3] = 255;
-            x = x + incrementoReal;
+            //  console.log(dataP[pix] + " " + dataP[pix + 1] + " " + dataP[pix + 2] + " " + dataP[pix + 3])
+            x = x + incrX
         }
-
-        y = y + incrementoImaginario;
+        y = y + incrY
     }
-    ctx.putImageData(datosCanvas, 0, 0);
+    ctx.putImageData(imageData, 0, 0)
 }
-
-iterarCanva(canvas, 5, 20, 0.5, 0);
-
-
-
-function rgb(hsl) {
-    const h = hsl[0] / 360;
-    const s = hsl[1] / 100;
-    const l = hsl[2] / 100;
-    let t2;
-    let t3;
-    let val;
-
-    if (s === 0) {
-        val = l * 255;
-        return [val, val, val];
-    }
-
-    if (l < 0.5) {
-        t2 = l * (1 + s);
-    } else {
-        t2 = l + s - l * s;
-    }
-
-    const t1 = 2 * l - t2;
-
-    const rgb = [0, 0, 0];
-    for (let i = 0; i < 3; i++) {
-        t3 = h + 1 / 3 * -(i - 1);
-        if (t3 < 0) {
-            t3++;
-        }
-
-        if (t3 > 1) {
-            t3--;
-        }
-
-        if (6 * t3 < 1) {
-            val = t1 + (t2 - t1) * 6 * t3;
-        } else if (2 * t3 < 1) {
-            val = t2;
-        } else if (3 * t3 < 2) {
-            val = t1 + (t2 - t1) * (2 / 3 - t3) * 6;
-        } else {
-            val = t1;
-        }
-
-        rgb[i] = val * 255;
-    }
-
-    return rgb;
-};
+renderizar(yMin, xMin, ca1, cb1);

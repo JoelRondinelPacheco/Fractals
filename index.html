@@ -5,27 +5,22 @@
     <meta charset="utf-8" />
   </head>
   <body>
-    <header>
-      <section class="nav-container">
-        <h1>Fractaly</h1>
-        <nav>
-          <ul>
-            <li>Git Hub</li>
-          </ul>
-        </nav>
-      </section>
-    </header>
+    <header><h1>Fractales</h1></header>
     <main class="main-container">
-      <section class="info-container">
-        <p>Create your own fractals</p>
-        <p>Select the colors or a gradient</p>
-        <p>Choose the valus</p>
-      </section>
-      <div class="canvas-container">
-        <canvas id="canvas" width="1500" height="1000"></canvas>
+      <div>
+        <h2>Section 1</h2>
+        <input id="color1" type="color" />
+        <input id="color2" type="color" />
+        <button id="setcolores">Set colores</button>
+        <input id="slider" type="range" min="-0.5" max="0.5" step="0.01" />
+        <input id="slidery" type="range" min="-0.5" max="0.5" step="0.01" />
       </div>
+      <div><h2>Section 2</h2></div>
     </main>
 
-    <script src="script.js"></script>
+    <canvas id="canvasF" tabindex="0"></canvas>
+
+    <footer></footer>
+    <script src="fractal.js"></script>
   </body>
 </html>
