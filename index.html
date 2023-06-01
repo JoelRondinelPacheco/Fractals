@@ -7,7 +7,7 @@
   <body>
     <header><h1>Fractales</h1></header>
     <main class="main-container">
-      <div>
+      <div class="config-container">
         <h2>Section 1</h2>
         <div class="container-colores">
           <input id="color1" type="color" value="#474646" />
@@ -15,15 +15,19 @@
         </div>
         <div class="containerparametros">
           <p>Constantes -agregar que se pueda agregar con texto</p>
-          <input id="slider" type="range" min="-1" max="1" step="0.01" />
-          <input id="slidery" type="range" min="-1" max="1" step="0.01" />
+          <div class="input-text">
+            <input type="text" id="real" />
+            <input type="text" name="" id="imag" />
+          </div>
+          <button id="setConstante">Set</button>
+          <input id="sliderReal" type="range" min="-2" max="2" step="0.01" />
+          <input id="sliderImag" type="range" min="-3" max="3" step="0.01" />
 
           <p>
             Iteracion, un numero muy alto puede producir que la imagen se vea
             con menos colores y afecta el rendimiento
           </p>
           <input id="iteraciones" type="text" />
-          <input id="slidery" type="range" min="0" max="1000" step="1" />
           <button id="confBtn">Confirmar</button>
         </div>
       </div>
@@ -33,6 +37,6 @@
     <canvas id="canvasF" tabindex="0"></canvas>
 
     <footer></footer>
-    <script src="main2.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

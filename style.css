@@ -5,6 +5,28 @@
   box-sizing: border-box;
 }
 
+header {
+  margin: 50px;
+  display: flex;
+}
+header h1 {
+  padding: 30px;
+  background-color: red;
+}
+
+.containerparametros {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+#real {
+  flex-basis: 2;
+}
+#imag {
+  flex-basis: 1;
+}
+
 #canvasF {
   position: absolute;
   top: 0;
@@ -14,4 +36,5 @@
 .main-container {
   display: flex;
   justify-content: space-between;
+  padding: 0 50px;
 }

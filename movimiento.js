@@ -1,5 +1,0 @@
-
-
-// ZOOM
-
-// MOVIMIENTO FLECHAS
