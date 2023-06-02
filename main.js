@@ -2,7 +2,6 @@ const color1 = document.getElementById('color1');
 const color2 = document.getElementById('color2');
 const real = document.getElementById('real');
 const imag = document.getElementById('imag');
-const setCtte = document.getElementById('setConstante');
 const sliderReal = document.getElementById('sliderReal')
 const sliderImag = document.getElementById('sliderImag')
 const canvas = document.getElementById('canvasF');
@@ -21,8 +20,6 @@ TODO:
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-console.log(canvas.width)
-console.log(canvas.height)
 
 const datosImag = contexto.getImageData(0, 0, canvas.width, canvas.height);
 var data = datosImag.data;
@@ -31,102 +28,102 @@ var color1V = hexToRgb(color1.value);
 var color2V = hexToRgb(color2.value);
 var coloresRender;
 
+var datos = {
+    cR: 0.35,
+    cI: 0.35,
+    maxIt: 50,
+    colores: [color1V, color2V],
+    anchoInicial: 6,
+}
 var movV = 0;
 var movH = 0;
 
-
-var anchoInicial = 6;
-var altoInicial = anchoInicial * canvas.height / canvas.width;
-
-var cReal = 0.35;
-var cImaginaria = 0.1;
-var maxIt = 50;
-var colores = [color1V, color2V];
+var altoInicial = datos.anchoInicial * canvas.height / canvas.width;
 
 window.addEventListener('load', function () {
-    console.log('Entro')
-    coloresRender = setColores(maxIt, colores)
-    renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
+    coloresRender = setColores(datos.maxIt, datos.colores)
+    renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
     contexto.putImageData(datosImag, 0, 0)
 })
+real.value = datos.cR;
+imag.value = datos.cI;
+sliderReal.value = datos.cR;
+sliderImag.value = datos.cI;
 
-// Cambio iteraciones/valores
-real.value = cReal;
-imag.value = cImaginaria;
-sliderReal.value = cReal;
-sliderImag.value = cImaginaria;
+iteraciones.value = datos.maxIt;
 
-setCtte.addEventListener('click', function () {
-    cReal = Number(real.value);
-    cImaginaria = Number(imag.value)
-    renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
-    contexto.putImageData(datosImag, 0, 0)
-})
-
-iteraciones.value = maxIt;
-iteraciones.addEventListener('change', function (e) {
-    maxIt = Number(e.target.value);
-})
 confirmarBtn.addEventListener('click', function () {
-    coloresRender = setColores(maxIt, colores);
-    renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    datos.cR = Number(real.value);
+    datos.cI = Number(imag.value);
+    sliderReal.value = datos.cR;
+    sliderImag.value = datos.cI;
+    datos.maxIt = Number(iteraciones.value);
+    console.log(datos.cR + " " + datos.cI)
+    coloresRender = setColores(datos.maxIt, datos.colores);
+    renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
+    contexto.putImageData(datosImag, 0, 0);
+    canvas.focus();
 })
+
+canvas.focus();
 
 // Cambio de colores
 color1.addEventListener('change', function () {
     color1V = hexToRgb(color1.value);
-    colores = [color1V, color2V];
-    coloresRender = setColores(maxIt, colores);
-    renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    datos.colores = [color1V, color2V];
+    coloresRender = setColores(datos.maxIt, datos.colores);
+    renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
+    contexto.putImageData(datosImag, 0, 0);
+    canvas.focus();
 })
 color2.addEventListener('change', function () {
     color2V = hexToRgb(color2.value);
-    var colores = [color1V, color2V];
-    coloresRender = setColores(maxIt, colores);
-    renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
+    datos.colores = [color1V, color2V];
+    coloresRender = setColores(datos.maxIt, datos.colores);
+    renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
     contexto.putImageData(datosImag, 0, 0)
 })
 
 // Cambio de forma
 sliderReal.addEventListener('change', function (event) {
-    cReal = Number(event.target.value);
-    real.value = cReal;
-    renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
+    datos.cR = Number(event.target.value);
+    real.value = datos.cR;
+    renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
     contexto.putImageData(datosImag, 0, 0);
 });
 sliderImag.addEventListener('change', function (event) {
-    cImaginaria = Number(event.target.value);
-    imag.value = cImaginaria;
-    renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
-    contexto.putImageData(datosImag, 0, 0);
+    datos.cI = Number(event.target.value);
+    imag.value = datos.cI;
+    renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
+    contexto.putImageData(datosImag, 0, 0)
 });
 
 // Moviento
 canvas.addEventListener("keydown", (e) => {
     if (e.key == ' ') {
-        anchoInicial = anchoInicial * 0.8;
-        altoInicial = anchoInicial * canvas.height / canvas.width;
-        renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
+        alert('espacop')
+        datos.anchoInicial = datos.anchoInicial * 0.8;
+        altoInicial = datos.anchoInicial * canvas.height / canvas.width;
+        renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
         contexto.putImageData(datosImag, 0, 0)
     } else if (e.key == 'ArrowLeft') {
-        movH = movH - 0.1 * anchoInicial;
-        renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
+        movH = movH - 0.1 * datos.anchoInicial;
+        renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
         contexto.putImageData(datosImag, 0, 0)
     } else if (e.key == 'ArrowRight') {
-        movH = movH + 0.1 * anchoInicial;
-        renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
+        movH = movH + 0.1 * datos.anchoInicial;
+        renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
         contexto.putImageData(datosImag, 0, 0)
     } else if (e.key == 'ArrowUp') {
         movV = movV - 0.1 * altoInicial;
-        renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
+        renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
         contexto.putImageData(datosImag, 0, 0)
     } else if (e.key == 'ArrowDown') {
-        movV = movV + 0.1 * anchoInicial;
-        renderizarCanvas(anchoInicial, altoInicial, movV, movH, cReal, cImaginaria, coloresRender, maxIt, 100, canvas.width, canvas.height, data);
+        movV = movV + 0.1 * datos.anchoInicial;
+        renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
         contexto.putImageData(datosImag, 0, 0)
     }
+    console.log("Entro")
 });
 
 // FUNCION
