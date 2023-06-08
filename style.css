@@ -5,22 +5,69 @@
   box-sizing: border-box;
 }
 
+h2,
+p {
+  font-family: "Josefine Sans", sans-serif;
+}
+
+.cMain {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+}
+
+ul li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-family: "Josefine Sans", sans-serif;
+}
+ul li:hover {
+  cursor: pointer;
+  color: #9ae75e;
+}
+
+#canvasF {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
 header {
   margin: 50px;
   display: flex;
 }
 header h1 {
+  font-family: "Titan One";
   padding: 30px;
   background-color: red;
+  color: white;
 }
-.config-container {
+
+/* Options */
+.cConfig {
   width: 20%;
+  background-color: #252525;
+  padding: 20px;
+  border-radius: 10px;
+  color: rgb(238, 238, 238);
+  font-size: 0.8rem;
 }
-.containerparametros {
+.tituloOptions i:hover,
+.tituloNav i:hover {
+  cursor: pointer;
+}
+
+.tituloOptions i,
+.tituloNav i {
+  color: #9ae75e;
+}
+
+.cParametros {
   display: flex;
   flex-direction: column;
 }
-.container-colores {
+.cColores {
   display: flex;
   justify-content: space-between;
 }
@@ -31,11 +78,7 @@ header h1 {
   cursor: pointer;
 }
 
-#setConstante {
-  padding: 5px;
-}
-
-.input-text {
+.inputText {
   display: flex;
   justify-content: space-between;
   margin: 5px 0;
@@ -44,7 +87,14 @@ header h1 {
 #imag {
   height: 30px;
   width: 48%;
+  border-radius: 5px;
+  border: none;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 600;
+  padding-right: 5px;
+  text-align: right;
 }
+
 .sliders {
   display: flex;
   justify-content: space-between;
@@ -54,56 +104,143 @@ header h1 {
   width: 48%;
 }
 
-#canvasF {
-  position: absolute;
-  top: 0;
-  z-index: -1;
+#sliderReal:hover,
+#sliderImag:hover {
+  cursor: pointer;
 }
 
-.main-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 50px;
+.cColores,
+.cIteraciones {
+  padding: 15px 0;
 }
 
-.navegacion {
-  width: 20%;
+#iteraciones {
+  width: 100%;
+  margin: 5px 0;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 600;
+  padding-right: 5px;
+  text-align: right;
 }
-
-.flechasabajo {
+#confBtn {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  padding: 0 30px;
-}
-#arr {
-  display: flex;
   justify-content: center;
-}
-
-#up,
-#left,
-#right,
-#down {
-  size: 30px;
-  padding: 5px;
+  width: 100%;
+  height: 30px;
   background-color: white;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Download */
+.cDownload {
+  display: flex;
+  gap: 10px;
+}
+.iconoDownload {
+  margin-top: 4px;
+}
+.cDownload h3 {
+  font-family: "Josefine Sans", sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+.cDownload ul li {
+  font-size: 1rem;
+}
+
+/* Navegacion */
+.cNav {
+  width: 18%;
+  background-color: #252525;
+  padding: 20px;
+  border-radius: 10px;
+  color: rgb(238, 238, 238);
+  font-size: 0.8rem;
+}
+.controlesNav {
+  width: 80%;
+  margin: 0 auto;
+}
+.tituloNav,
+.tituloOptions,
+.tituloIteraciones {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+#del {
+  display: flex;
+  background-color: rgb(238, 238, 238);
+  color: #252525;
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+#up,
+#other {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+#space {
+  display: flex;
+  background-color: rgb(238, 238, 238);
+  color: #252525;
+  width: 100%;
+  height: 30px;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-top: 15px;
+}
+#active {
+  border: 3px solid white;
+  border-radius: 8px;
+  padding: 5px;
+  margin-top: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+}
+#up:hover,
+#left:hover,
+#down:hover,
+#right:hover,
+#space:hover,
+#active:hover,
+#del:hover {
+  cursor: pointer;
+}
+#active:hover {
+  color: #9ae75e;
+  border-color: #9ae75e;
 }
 
-#left {
-  transform: rotate(-90deg);
+#active p {
+  font-size: 0.9rem;
+  font-weight: 600;
 }
-#down {
-  transform: rotate(180deg);
-  margin: 10px;
+#instructions {
+  padding: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
-
-#right {
-  transform: rotate(90deg);
+#instructions p {
+  margin-bottom: 5px;
 }

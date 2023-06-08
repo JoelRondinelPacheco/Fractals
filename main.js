@@ -1,5 +1,6 @@
 const color1 = document.getElementById('color1');
 const color2 = document.getElementById('color2');
+const titulo = document.getElementById('titulo');
 const real = document.getElementById('real');
 const imag = document.getElementById('imag');
 const sliderReal = document.getElementById('sliderReal')
@@ -14,7 +15,8 @@ TODO:
     Agregar funcionalidad de zoom - out
     Agregarle un fractal random (o random, pero predeterminados)
     Agregar funcionalidad de descargar
-    Pulir UI
+    Funcionalidad activar navegacion
+    tERMINAR Pulir UI
     ORDEN DE CARGA DE LA PAGINA, buscar window events para asegurarse que carga bien
 */
 
@@ -41,15 +43,17 @@ var movH = 0;
 var altoInicial = datos.anchoInicial * canvas.height / canvas.width;
 
 window.addEventListener('load', function () {
+    titulo.style.color = String(color1.value);
+    titulo.style.backgroundColor = String(color2.value);
     coloresRender = setColores(datos.maxIt, datos.colores)
     renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
     contexto.putImageData(datosImag, 0, 0)
+    canvas.focus();
 })
 real.value = datos.cR;
 imag.value = datos.cI;
 sliderReal.value = datos.cR;
 sliderImag.value = datos.cI;
-
 iteraciones.value = datos.maxIt;
 
 confirmarBtn.addEventListener('click', function () {
@@ -65,11 +69,17 @@ confirmarBtn.addEventListener('click', function () {
     canvas.focus();
 })
 
-canvas.focus();
+canvas.addEventListener('click', () => {
+    canvas.focus();
+})
+
+
 
 // Cambio de colores
 color1.addEventListener('change', function () {
     color1V = hexToRgb(color1.value);
+    titulo.style.color = String(color1.value);
+    titulo.style.backgroundColor = String(color2.value);
     datos.colores = [color1V, color2V];
     coloresRender = setColores(datos.maxIt, datos.colores);
     renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
@@ -77,11 +87,14 @@ color1.addEventListener('change', function () {
     canvas.focus();
 })
 color2.addEventListener('change', function () {
+    titulo.style.color = String(color1.value);
+    titulo.style.backgroundColor = String(color2.value);
     color2V = hexToRgb(color2.value);
     datos.colores = [color1V, color2V];
     coloresRender = setColores(datos.maxIt, datos.colores);
     renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    contexto.putImageData(datosImag, 0, 0);
+    canvas.focus();
 })
 
 // Cambio de forma
@@ -95,35 +108,44 @@ sliderImag.addEventListener('change', function (event) {
     datos.cI = Number(event.target.value);
     imag.value = datos.cI;
     renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    contexto.putImageData(datosImag, 0, 0);
 });
 
 // Moviento
 canvas.addEventListener("keydown", (e) => {
     if (e.key == ' ') {
-        alert('espacop')
         datos.anchoInicial = datos.anchoInicial * 0.8;
         altoInicial = datos.anchoInicial * canvas.height / canvas.width;
         renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
         contexto.putImageData(datosImag, 0, 0)
+        canvas.focus();
     } else if (e.key == 'ArrowLeft') {
         movH = movH - 0.1 * datos.anchoInicial;
         renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
-        contexto.putImageData(datosImag, 0, 0)
+        contexto.putImageData(datosImag, 0, 0);
+        canvas.focus();
     } else if (e.key == 'ArrowRight') {
         movH = movH + 0.1 * datos.anchoInicial;
         renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
-        contexto.putImageData(datosImag, 0, 0)
+        contexto.putImageData(datosImag, 0, 0);
+        canvas.focus();
     } else if (e.key == 'ArrowUp') {
         movV = movV - 0.1 * altoInicial;
         renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
         contexto.putImageData(datosImag, 0, 0)
+        canvas.focus();
     } else if (e.key == 'ArrowDown') {
         movV = movV + 0.1 * datos.anchoInicial;
         renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
         contexto.putImageData(datosImag, 0, 0)
+        canvas.focus();
+    } else if (e.key == 'Delete') {
+        datos.anchoInicial = datos.anchoInicial * 1.2;
+        altoInicial = datos.anchoInicial * canvas.height / canvas.width;
+        renderizarCanvas(datos.anchoInicial, altoInicial, movV, movH, datos.cR, datos.cI, coloresRender, datos.maxIt, 100, canvas.width, canvas.height, data);
+        contexto.putImageData(datosImag, 0, 0)
+        canvas.focus();
     }
-    console.log("Entro")
 });
 
 // FUNCION

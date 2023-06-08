@@ -2,20 +2,26 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/a9ed0c9692.js"
+      crossorigin="anonymous"
+    ></script>
     <meta charset="utf-8" />
   </head>
   <body>
-    <header><h1>Fractales</h1></header>
-    <main class="main-container">
-      <div class="config-container">
-        <h2>Settings</h2>
-        <div class="container-colores">
+    <header><h1 id="titulo">FRACTALY</h1></header>
+    <main class="cMain">
+      <div class="cConfig">
+        <div class="tituloOptions">
+          <i class="fa-regular fa-eye-slash fa-xl"></i>
+          <h2>Options</h2>
+        </div>
+        <div class="cColores">
           <input id="color1" type="color" value="#474646" />
           <input id="color2" type="color" value="#ff0000" />
         </div>
-        <div class="containerparametros">
-          <p>Constantes. Mas info</p>
-          <div class="input-text">
+        <div class="cParametros">
+          <div class="inputText">
             <input type="text" id="real" />
             <input type="text" name="" id="imag" />
           </div>
@@ -23,23 +29,53 @@
             <input id="sliderReal" type="range" min="-2" max="2" step="0.01" />
             <input id="sliderImag" type="range" min="-3" max="3" step="0.01" />
           </div>
-          <p>Iteraciones</p>
+          <div class="cIteraciones">
+            <div class="tituloIteraciones">
+              <i class="fa-solid fa-rotate fa-xl"></i>
+              <h2>Iterations</h2>
+            </div>
 
-          <input id="iteraciones" type="text" />
-          <button id="confBtn">Confirm</button>
+            <input id="iteraciones" type="text" />
+            <button id="confBtn">Confirm</button>
+          </div>
+        </div>
+        <div class="cDownload">
+          <div class="iconoDownload">
+            <i class="fa-solid fa-file-arrow-down fa-xl"></i>
+          </div>
+          <div class="textoDownload">
+            <h3>Download</h3>
+            <ul>
+              <li>HD 760</li>
+              <li>HD 1080</li>
+              <li>HD 4K</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="navegacion">
-        <h2>Navegacion</h2>
-        <div class="navarrows">
-          <div id="arr">
-            <i id="up" class="fa-solid fa-arrow-up fa-2x"></i>
+      <div class="cNav">
+        <div class="tituloNav">
+          <h2>Navegacion</h2>
+          <i class="fa-regular fa-eye-slash fa-xl"></i>
+        </div>
+        <div class="controlesNav">
+          <div id="del"><p>Del</p></div>
+          <div id="up"><i class="fa-solid fa-circle-arrow-up fa-3x"></i></div>
+          <div id="other">
+            <i id="left" class="fa-solid fa-circle-arrow-left fa-3x"></i>
+            <i id="down" class="fa-solid fa-circle-arrow-down fa-3x"></i>
+            <i id="right" class="fa-solid fa-circle-arrow-right fa-3x"></i>
           </div>
-          <div class="flechasabajo">
-            <i id="left" class="fa-solid fa-arrow-up fa-2x"></i>
-            <i id="down" class="fa-solid fa-arrow-up fa-2x"></i>
-            <i id="right" class="fa-solid fa-arrow-up fa-2x"></i>
+          <div id="space"><p>Space</p></div>
+          <div id="active">
+            <i class="fa-solid fa-compass fa-xl"></i>
+            <p>Activate Nav</p>
           </div>
+        </div>
+        <div id="instructions">
+          <p>Arrows: Navigate</p>
+          <p>Space: Zoom In</p>
+          <p>Del: Zoom Out</p>
         </div>
       </div>
     </main>
