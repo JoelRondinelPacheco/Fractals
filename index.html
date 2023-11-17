@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <script
-      src="https://kit.fontawesome.com/a9ed0c9692.js"
-      crossorigin="anonymous"
-    ></script>
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <header><h1 id="title">FRACTALY</h1></header>
-    <main class="cMain">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <header>
+    <section class="header-container">
+    <section class="header-title"><span id="title">FRACTALY</span>
+      <h1 class="subtitle">Fractal generator</h1>
+    </section>
+    <section class="header-social">
+      <div>
+        <a target="_blank" href="https:linkedin.com/in/joelrondinelpacheco"><div class="icon icon-ln"></div></a>
+        <a target="_blank" href="https://github.com/JoelRondinelPacheco"><div class="icon icon-gh"></div></a>
+      </div>
+      <div>
+        <h2 class="header-name">Joel Rondinel Pacheco</h2>
+      </div>
+    </section>
+  </section>
+  </header>
+  <main class="cMain">
+    <section class="menu-container">
       <div class="container" id="opt">
         <div class="title">
           <div id="ocultarConfig">
@@ -20,41 +35,17 @@
         </div>
         <div class="options" id="options">
           <div class="options options--menu">
-            <input
-              class="options__color"
-              id="color1"
-              type="color"
-              value="#000000"
-            />
+            <input class="options__color" id="color1" type="color" value="#000000" />
             <input type="text" id="real" class="options__input" />
             <div>
-              <input
-                class="options__slider"
-                id="sliderReal"
-                type="range"
-                min="-2"
-                max="2"
-                step="0.01"
-              />
+              <input class="options__slider" id="sliderReal" type="range" min="-2" max="2" step="0.01" />
             </div>
           </div>
           <div class="options options--menu">
-            <input
-              class="options__color"
-              id="color2"
-              type="color"
-              value="#F6D32D"
-            />
+            <input class="options__color" id="color2" type="color" value="#F6D32D" />
             <input type="text" id="imag" class="options__input" />
 
-            <input
-              class="options__slider"
-              id="sliderImag"
-              type="range"
-              min="-3"
-              max="3"
-              step="0.01"
-            />
+            <input class="options__slider" id="sliderImag" type="range" min="-3" max="3" step="0.01" />
           </div>
         </div>
         <div class="options options--menu" id="iteraciones">
@@ -64,11 +55,7 @@
               <h2>Iterations</h2>
             </div>
 
-            <input
-              class="options__input options__input--iteraciones"
-              id="iteracionesInput"
-              type="text"
-            />
+            <input class="options__input options__input--iteraciones" id="iteracionesInput" type="text" />
             <button id="confBtn">Confirm</button>
           </div>
         </div>
@@ -79,9 +66,15 @@
           <div class="download">
             <h3>Download</h3>
             <ul>
-              <li id="760">HD 760</li>
-              <li id="1080">HD 1080</li>
-              <li id="4k">HD 4K</li>
+              <li class="generateLink" data-width="1280" data-height="760">
+                1280 x 760
+              </li>
+              <li class="generateLink" data-width="1920" data-height="1080">
+                1920 x 1080
+              </li>
+              <li class="generateLink" data-width="3840" data-height="2160">
+                3840 x 2160
+              </li>
             </ul>
           </div>
         </div>
@@ -94,25 +87,20 @@
           </div>
         </div>
         <div class="controls" id="controles">
-          <div class="controls__del" id="del"><p>Del</p></div>
+          <div class="controls__del" id="del">
+            <p>Del</p>
+          </div>
           <div class="controls__up">
             <i id="up" class="fa-solid fa-circle-arrow-up fa-3x"></i>
           </div>
           <div class="controls__other">
-            <i
-              id="controls__left"
-              class="fa-solid fa-circle-arrow-left fa-3x"
-            ></i>
-            <i
-              id="controls__down"
-              class="fa-solid fa-circle-arrow-down fa-3x"
-            ></i>
-            <i
-              id="controls__right"
-              class="fa-solid fa-circle-arrow-right fa-3x"
-            ></i>
+            <i id="controls__left" class="fa-solid fa-circle-arrow-left fa-3x"></i>
+            <i id="controls__down" class="fa-solid fa-circle-arrow-down fa-3x"></i>
+            <i id="controls__right" class="fa-solid fa-circle-arrow-right fa-3x"></i>
           </div>
-          <div class="controls__space" id="space"><p>Space</p></div>
+          <div class="controls__space" id="space">
+            <p>Space</p>
+          </div>
           <div id="active">
             <i class="fa-solid fa-compass fa-xl"></i>
             <p>Activate Nav</p>
@@ -124,15 +112,14 @@
           <p>Del: Zoom Out</p>
         </div>
       </div>
-    </main>
+    </section>
+  </main>
 
-    <canvas id="canvasF" tabindex="0"></canvas>
+  <canvas id="canvasF" tabindex="0"></canvas>
 
-    <footer></footer>
-    <script
-      src="https://kit.fontawesome.com/a9ed0c9692.js"
-      crossorigin="anonymous"
-    ></script>
-    <script type="module" src="main.js"></script>
-  </body>
+  <footer></footer>
+  <script src="https://kit.fontawesome.com/a9ed0c9692.js" crossorigin="anonymous"></script>
+  <script type="module" src="main.js"></script>
+</body>
+
 </html>

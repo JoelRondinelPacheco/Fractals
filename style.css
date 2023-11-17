@@ -26,14 +26,61 @@ ul li:hover {
   z-index: -1;
 }
 
+/* ------- HEADER ------- */
 header {
   display: flex;
+  padding: 1vw 3vw;
 }
-header h1 {
-  background-color: red;
+.header-container {
+  background-color: #252525;
+  display: flex;
+  gap: 2rem;
+  border-radius: 5px;
+  padding: 1vw 2vw;
+}
+.header-title {
+  background-color: #252525;
   color: white;
   font-family: "Titan One";
-  padding: 30px;
+}
+#title {
+  font-size: 2rem;
+}
+.subtitle {
+  color: white;
+  font-size: 1rem;
+}
+
+.header-social {
+display: flex;
+flex-direction: column;
+align-content: space-between;
+justify-content: space-between;
+padding-top: 5px;
+}
+.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  vertical-align: middle;
+}
+
+.icon:hover {
+  fill: #9ae75e;
+}
+.icon-ln {
+  background-image: url('./img/icons8-linkedin.svg');
+}
+.icon-gh {
+  background-image: url('./img/icons8-github.svg');
+}
+
+.header-name {
+  font-size: 0.8rem;
+  color: rgb(255, 255, 255);
+  font-family: "Titan One";
+
 }
 
 /* Options */
@@ -229,10 +276,15 @@ header h1 {
 
 @media (min-width: 961px) {
   main {
-    display: flex;
-    justify-content: space-between;
+  
     margin: 0 auto;
     padding: 0 3vw;
+  }
+  .menu-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
   }
   .container {
     background-color: #252525;
@@ -291,4 +343,12 @@ header h1 {
   #iteraciones {
     display: none;
   }
+}
+
+.glasss {
+  background: rgba(0, 0, 0, 0.88);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(11.7px);
+-webkit-backdrop-filter: blur(11.7px);
 }

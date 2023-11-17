@@ -1,4 +1,4 @@
-import renderizarCanvas from './js/renderizarCanva.js'
+import { renderizarCanvas } from './js/renderizarCanvas.js'
 
 const color1 = document.getElementById('color1');
 const color2 = document.getElementById('color2');
@@ -37,9 +37,7 @@ const ojoNav = document.getElementById('ojoNav');
 
 // Download
 
-const download760 = document.getElementById("760")
-const download1080 = document.getElementById("1080")
-const download4k = document.getElementById("4k")
+const donwloads = document.querySelectorAll('.generateLink')
 /*
 TODO:
     Al hacer click en activar nav, que se ilume el texto de los controles
@@ -54,7 +52,6 @@ canvas.width = width;
 canvas.height = height;
 
 const datosImag = contexto.getImageData(0, 0, width, height);
-console.log(datosImag)
 var data = datosImag.data;
 
 var color1V = hexToRgb(color1.value);
@@ -71,11 +68,11 @@ var datos = {
 var movV = 0;
 var movH = 0;
 
-var altoInicial = datos.anchoInicial * canvas.height / canvas.width;
+var altoInicial = datos.anchoInicial * height / width;
 
 window.addEventListener('load', function () {
-    titulo.style.color = String(color1.value);
-    titulo.style.backgroundColor = String(color2.value);
+    //titulo.style.color = String(color1.value);
+  //  titulo.style.backgroundColor = String(color2.value);
     coloresRender = setColores(datos.maxIt, datos.colores)
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
     contexto.putImageData(datosImag, 0, 0)
@@ -120,8 +117,8 @@ confirmarBtn.addEventListener('click', () => {
 // Cambio de colores
 color1.addEventListener('change', function () {
     color1V = hexToRgb(color1.value);
-    titulo.style.color = String(color1.value);
-    titulo.style.backgroundColor = String(color2.value);
+   // titulo.style.color = String(color1.value);
+    //titulo.style.backgroundColor = String(color2.value);
     datos.colores = [color1V, color2V];
     coloresRender = setColores(datos.maxIt, datos.colores);
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
@@ -158,8 +155,8 @@ itInput.addEventListener('keypress', (event) => {
 })
 
 color2.addEventListener('change', function () {
-    titulo.style.color = String(color1.value);
-    titulo.style.backgroundColor = String(color2.value);
+    //titulo.style.color = String(color1.value);
+    //titulo.style.backgroundColor = String(color2.value);
     color2V = hexToRgb(color2.value);
     datos.colores = [color1V, color2V];
     coloresRender = setColores(datos.maxIt, datos.colores);
@@ -209,12 +206,31 @@ activador.addEventListener('click', () => {
 })
 
 // Download
-download760.addEventListener("click", () => {
-    const dataURL = canvas.toDataURL()
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.download = 'miImagen.png'; // Nombre del archivo para guardar
-    link.click();
+donwloads.forEach(link => {
+    link.addEventListener("click", () => {
+        console.log(link)
+
+        const width = parseInt(link.getAttribute('data-width'));
+        const height = parseInt(link.getAttribute('data-height'));
+
+        const canvasD = document.createElement('canvas');
+        canvasD.width = width;
+        canvasD.height = height;
+
+        const contextoD = canvasD.getContext('2d');
+        const dataD = contextoD.getImageData(0, 0, width, height)
+        const pixeles = dataD.data
+        const alto = datos.anchoInicial * height / width;
+        dataD.setData = renderizarCanvas(datos, alto, movV, movH, coloresRender, 100, width, height, pixeles)
+        contextoD.putImageData(dataD, 0, 0)
+
+        const dataURL = canvasD.toDataURL();
+        const downloadLink = document.createElement('a');
+        downloadLink.href = dataURL;
+        downloadLink.download = `fractaly-${width}x${height}.png`;
+        downloadLink.click();
+        canvas.focus()
+    })
 })
 
 

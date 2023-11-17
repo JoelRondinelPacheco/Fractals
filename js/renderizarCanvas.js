@@ -1,5 +1,4 @@
-
-export default function renderizarCanvas(datos, altoInicial, movV, movH, colores, infinito, ancho, alto, pixeles) {
+export function renderizarCanvas(datos, altoInicial, movV, movH, colores, infinito, ancho, alto, pixeles) {
     var xMinimo = movH - datos.anchoInicial / 2;
     var yMinimo = movV - altoInicial / 2;
     let xMax = xMinimo + datos.anchoInicial;
