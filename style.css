@@ -1,8 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&family=Titan+One&display=swap");
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+}
+h2,
+p {
+  font-family: "Josefine Sans", sans-serif;
+}
+
+ul li {
+  font-family: "Josefine Sans", sans-serif;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul li:hover {
+  color: #9ae75e;
+  cursor: pointer;
 }
 
 #canvasF {
@@ -11,7 +26,329 @@
   z-index: -1;
 }
 
-.main-container {
+/* ------- HEADER ------- */
+header {
   display: flex;
-  justify-content: space-between;
+  padding: 1vw 3vw;
+}
+.header-container {
+  background-color: #252525;
+  display: flex;
+  gap: 2rem;
+  border-radius: 5px;
+  padding: 1vw 2vw;
+}
+.header-title {
+  background-color: #252525;
+  color: white;
+  font-family: "Titan One";
+}
+#title {
+  font-size: 2rem;
+}
+.subtitle {
+  color: white;
+  font-size: 1rem;
+}
+
+.header-social {
+display: flex;
+flex-direction: column;
+align-content: space-between;
+justify-content: space-between;
+padding-top: 5px;
+}
+.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  vertical-align: middle;
+}
+
+.icon:hover {
+  fill: #9ae75e;
+}
+.icon-ln {
+  background-image: url('./img/icons8-linkedin.svg');
+}
+.icon-gh {
+  background-image: url('./img/icons8-github.svg');
+}
+
+.header-name {
+  font-size: 0.8rem;
+  color: rgb(255, 255, 255);
+  font-family: "Titan One";
+
+}
+
+/* Options */
+
+.config__title,
+.title i {
+  color: #9ae75e;
+}
+
+.config__title i:hover,
+.title i:hover,
+.config__slider {
+  cursor: pointer;
+}
+
+.options {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.options--menu {
+  flex-direction: column;
+}
+
+.options__slider,
+.options__color {
+  width: 100%;
+  border: 4px solid white;
+  cursor: pointer;
+}
+
+.options__input {
+  border: none;
+  border-radius: 5px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 600;
+  height: 30px;
+  padding-right: 5px;
+  text-align: center;
+  width: 100%;
+}
+
+.options__input--iteraciones {
+  margin: 5px 0;
+}
+
+.options__iteraciones {
+  padding: 15px 0;
+}
+
+#confBtn {
+  align-items: center;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  width: 100%;
+}
+#confBtn:hover {
+  background-color: #b4ec89;
+}
+
+/* Download */
+.iconoDownload {
+  margin-top: 4px;
+}
+.download h3 {
+  font-family: "Josefine Sans", sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+.download ul li {
+  font-size: 1rem;
+}
+
+.title,
+.config__title,
+.tituloIteraciones {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+/* NAVEGACION */
+.controls {
+  margin-top: 20px;
+}
+
+.controls__del {
+  align-items: center;
+  background-color: rgb(238, 238, 238);
+  border-radius: 19px;
+  color: #252525;
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 600;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+.controls__del p {
+  user-select: none;
+}
+.controls__up,
+.controls__other {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+.controls__space {
+  align-items: center;
+  background-color: rgb(238, 238, 238);
+  border-radius: 15px;
+  color: #252525;
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: 600;
+  height: 30px;
+  justify-content: center;
+  margin-top: 15px;
+  width: 100%;
+}
+#active {
+  align-items: center;
+  border: 3px solid white;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+  padding: 5px;
+}
+.controls__up:hover,
+#controls__left:hover,
+#controls__down:hover,
+#controls__right:hover,
+.controls__space:hover,
+.controls__active:hover,
+.controls__del:hover {
+  cursor: pointer;
+}
+#active:hover {
+  border-color: #9ae75e;
+  color: #9ae75e;
+  cursor: pointer;
+}
+.controls__up:hover,
+#controls__down:hover,
+#controls__left:hover,
+#controls__right:hover {
+  color: #b4ec89;
+}
+.controls__del:hover,
+.controls__space:hover {
+  background-color: #b4ec89;
+}
+.controls__space p {
+  user-select: none;
+}
+#active p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  user-select: none;
+}
+#instructions {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 20px;
+}
+#instructions p {
+  margin-bottom: 5px;
+}
+
+/* VISIBILIDAD */
+
+.hidden {
+  display: none;
+}
+
+.altura {
+  height: 60px;
+}
+
+.mostrarOjo {
+  display: none;
+}
+
+@media (min-width: 961px) {
+  main {
+  
+    margin: 0 auto;
+    padding: 0 3vw;
+  }
+  .menu-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+  }
+  .container {
+    background-color: #252525;
+    border-radius: 10px;
+    color: rgb(238, 238, 238);
+    font-size: 0.8rem;
+    padding: 20px;
+    width: 20%;
+    max-width: 250px;
+    height: 100%;
+  }
+}
+
+@media (max-width: 960px) {
+  #options {
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+  }
+
+  .options--menu {
+    flex-direction: column-reverse;
+    width: 20%;
+    min-width: 100px;
+    max-width: 150px;
+    padding: 10px;
+  }
+
+  #sliderReal {
+    transform: rotate(-90deg);
+    transform-origin: bottom left;
+    margin-left: 15%;
+    min-width: 200px;
+  }
+
+  #sliderImag {
+    transform: rotate(-90deg);
+    transform-origin: bottom left;
+    margin-left: 100%;
+    min-width: 200px;
+  }
+
+  #nav {
+    display: none;
+  }
+
+  #opt .title {
+    display: none;
+  }
+
+  #download {
+    display: none;
+  }
+
+  #iteraciones {
+    display: none;
+  }
+}
+
+.glasss {
+  background: rgba(0, 0, 0, 0.88);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(11.7px);
+-webkit-backdrop-filter: blur(11.7px);
 }
