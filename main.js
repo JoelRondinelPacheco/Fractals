@@ -46,6 +46,28 @@ TODO:
     Agregar funcionalidad de ocultar paneles
     ORDEN DE CARGA DE LA PAGINA, buscar window events para asegurarse que carga bien
 */
+//WASM
+const fractalWasm = await fetch("./fractal.wasm");
+const bytes = await fractalWasm.arrayBuffer();
+const { instance } = await WebAssembly.instantiate(bytes);
+const result = instance.exports.add(2, 3);
+console.log("REsutaldo: ", result);
+console.log("INSTANCE: ", instance.exports)
+const { set_size, get_width, get_height, set_max_it, get_max_it } = instance.exports;
+
+function syncCanvasSize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    set_size(canvas.width, canvas.height);
+
+    // console.log("C width:", get_width());
+    // console.log("C height:", get_height());
+}
+
+syncCanvasSize();
+window.addEventListener("resize", syncCanvasSize);
+//WASM
 var width = window.innerWidth
 var height = window.innerHeight
 canvas.width = width;
@@ -108,6 +130,9 @@ confirmarBtn.addEventListener('click', () => {
     sliderReal.value = datos.cR;
     sliderImag.value = datos.cI;
     datos.maxIt = Number(itInput.value);
+    //console.log("BEFORE Max it: ", get_max_it());
+    set_max_it(Number(itInput.value));
+    //console.log("AFTER Max it: ", get_max_it());
     coloresRender = setColores(datos.maxIt, datos.colores);
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
     ctx.putImageData(datosImag, 0, 0)
