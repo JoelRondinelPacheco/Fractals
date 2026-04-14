@@ -10,7 +10,7 @@ const sliderImag = document.getElementById('sliderImag')
 const canvas = document.getElementById('canvasF');
 const itInput = document.getElementById('iteracionesInput');
 const confirmarBtn = document.getElementById('confBtn');
-const contexto = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 //Botones
 const botonDel = document.getElementById('del');
 const botonUp = document.getElementById('up');
@@ -51,7 +51,7 @@ var height = window.innerHeight
 canvas.width = width;
 canvas.height = height;
 
-const datosImag = contexto.getImageData(0, 0, width, height);
+const datosImag = ctx.getImageData(0, 0, width, height);
 var data = datosImag.data;
 
 var color1V = hexToRgb(color1.value);
@@ -72,10 +72,10 @@ var altoInicial = datos.anchoInicial * height / width;
 
 window.addEventListener('load', function () {
     //titulo.style.color = String(color1.value);
-  //  titulo.style.backgroundColor = String(color2.value);
+    //  titulo.style.backgroundColor = String(color2.value);
     coloresRender = setColores(datos.maxIt, datos.colores)
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 })
 
@@ -110,19 +110,19 @@ confirmarBtn.addEventListener('click', () => {
     datos.maxIt = Number(itInput.value);
     coloresRender = setColores(datos.maxIt, datos.colores);
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 })
 
 // Cambio de colores
 color1.addEventListener('change', function () {
     color1V = hexToRgb(color1.value);
-   // titulo.style.color = String(color1.value);
+    // titulo.style.color = String(color1.value);
     //titulo.style.backgroundColor = String(color2.value);
     datos.colores = [color1V, color2V];
     coloresRender = setColores(datos.maxIt, datos.colores);
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 })
 real.addEventListener('keypress', (event) => {
@@ -130,7 +130,7 @@ real.addEventListener('keypress', (event) => {
         datos.cR = Number(real.value)
         sliderReal.value = datos.cR
         datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-        contexto.putImageData(datosImag, 0, 0)
+        ctx.putImageData(datosImag, 0, 0)
         canvas.focus();
     }
 })
@@ -140,7 +140,7 @@ imag.addEventListener('keypress', (event) => {
         datos.cI = Number(imag.value)
         sliderImag.value = datos.cI
         datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-        contexto.putImageData(datosImag, 0, 0)
+        ctx.putImageData(datosImag, 0, 0)
         canvas.focus();
     }
 })
@@ -149,7 +149,7 @@ itInput.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
         datos.maxIt = Number(itInput.value);
         datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-        contexto.putImageData(datosImag, 0, 0)
+        ctx.putImageData(datosImag, 0, 0)
         canvas.focus();
     }
 })
@@ -161,7 +161,7 @@ color2.addEventListener('change', function () {
     datos.colores = [color1V, color2V];
     coloresRender = setColores(datos.maxIt, datos.colores);
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 })
 
@@ -170,13 +170,13 @@ sliderReal.addEventListener('change', function (event) {
     datos.cR = Number(event.target.value);
     real.value = datos.cR;
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
 });
 sliderImag.addEventListener('change', function (event) {
     datos.cI = Number(event.target.value);
     imag.value = datos.cI;
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
 });
 
 // Moviento
@@ -239,38 +239,38 @@ function zoomIn() {
     datos.anchoInicial = datos.anchoInicial * 0.8;
     altoInicial = datos.anchoInicial * canvas.height / canvas.width;
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 }
 function moveLeft() {
     movH = movH - 0.1 * datos.anchoInicial;
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 }
 function moveRight() {
     movH = movH + 0.1 * datos.anchoInicial;
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 }
 function moveUp() {
     movV = movV - 0.1 * altoInicial;
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 }
 function moveDown() {
     movV = movV + 0.1 * datos.anchoInicial;
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 }
 function zoomOut() {
     datos.anchoInicial = datos.anchoInicial * 1.2;
     altoInicial = datos.anchoInicial * canvas.height / canvas.width;
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    contexto.putImageData(datosImag, 0, 0)
+    ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
 }
 function setColores(maxIteraciones, color) {
