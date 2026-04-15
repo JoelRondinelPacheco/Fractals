@@ -25,6 +25,8 @@ typedef struct Coord
 // config
 void set_max_it(int it);
 void set_size(int width, int height);
+void set_imag(double val);
+void set_real(double val);
 void set_color1(unsigned char r, unsigned char g, unsigned char b);
 void set_color2(unsigned char r, unsigned char g, unsigned char b);
 
@@ -35,7 +37,7 @@ void *get_pixel_buffer(void);
 void *get_color_buffer(void);
 // defs?
 int julia_set_coord_w(Coord c);
-void set_buffer(int idx, int w);
+void set_buffer_color(int idx, int w);
 
 int get_palette_color_r(int idx);
 int get_palette_color_g(int idx);

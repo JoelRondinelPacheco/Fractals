@@ -27,7 +27,14 @@ static struct CordLimit xLimit = {-3, 3, 0.1};
 static struct CordLimit yLimit = {-3, 3, 0.1};
 static double dx = 0;
 static double dy = 0;
-
+void set_imag(double val)
+{
+    julia_set.imag = val;
+}
+void set_real(double val)
+{
+    julia_set.real = val;
+}
 // todo on set width
 void set_size(int w, int h)
 {
@@ -72,22 +79,59 @@ void calc_pixel_buffer()
         {
             w = julia_set_coord_w(eval);
             pixel = j + i * display_w;
-
-            set_buffer(pixel, w);
+            // if (w == max_it)
+            // {
+            //     set_buffer(pixel, w - 10);
+            // }
+            // else
+            // {
+            //     set_buffer(pixel, w);
+            // }
+            set_buffer_color(pixel, w);
             eval.real = eval.real + xLimit.dIncr;
         }
         eval.imag = eval.imag + yLimit.dIncr;
     }
 }
-void set_buffer(int idx, int w)
+void set_buffer_color(int idx, int w)
 {
-    pixel_buffer[idx].r = palette[w].r;
-    pixel_buffer[idx].g = palette[w].g;
-    pixel_buffer[idx].b = palette[w].b;
-    // pixel_buffer[idx].r = 0;
-    // pixel_buffer[idx].g = 255;
-    // pixel_buffer[idx].b = 0;
-    pixel_buffer[idx].a = 255;
+    if (w >= max_it)
+    {
+        // color maximo
+        // pixel_buffer[idx].r = palette[max_it - 1].r;
+        // pixel_buffer[idx].g = palette[max_it - 1].g;
+        // pixel_buffer[idx].b = palette[max_it - 1].b;
+        // negro
+        //  pixel_buffer[idx].r = 0;
+        //  pixel_buffer[idx].g = 0;
+        //  pixel_buffer[idx].b = 0;
+        // blue
+        pixel_buffer[idx].r = 0;
+        pixel_buffer[idx].g = 0;
+        pixel_buffer[idx].b = 255;
+        pixel_buffer[idx].a = 255;
+    }
+    else
+    {
+        pixel_buffer[idx].r = palette[w].r;
+        pixel_buffer[idx].g = palette[w].g;
+        pixel_buffer[idx].b = palette[w].b;
+        pixel_buffer[idx].a = 255;
+    }
+    // if (w == 20)
+    // {
+    //     pixel_buffer[idx].r = 0;
+    //     pixel_buffer[idx].g = 0;
+    //     pixel_buffer[idx].b = 255;
+    //     pixel_buffer[idx].a = 255;
+    // }
+    // else
+    // {
+    //     pixel_buffer[idx].r = palette[w].r;
+    //     pixel_buffer[idx].g = palette[w].g;
+    //     pixel_buffer[idx].b = palette[w].b;
+    //     pixel_buffer[idx].a = 255;
+    // }
 }
 
 void *get_pixel_buffer(void)
@@ -101,16 +145,17 @@ void *get_color_buffer(void)
 int julia_set_coord_w(Coord c)
 {
     double a, aa, b, bb, a_b;
+    int w = 0;
     a = c.real;
     b = c.imag;
-    int w = 0;
     // a, b, n -> a =x; b = y
     while (w < max_it)
     {
         aa = a * a;
         bb = b * b;
-        if ((aa + bb) > 10000) // se pinta todo negro
+        if ((aa + bb) > 5) // se pinta todo negro
         {
+            // aca toma es que el w tiene el peso para elegir el color
             break;
         }
         a_b = 2 * a * b;

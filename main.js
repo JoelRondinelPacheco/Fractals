@@ -82,6 +82,8 @@ const {
     set_size,
     set_color1,
     set_color2,
+    set_imag,
+    set_real,
     build_palette,
     calc_pixel_buffer,
     get_pixel_buffer,
@@ -111,7 +113,9 @@ function syncCanvasSize() {
     canvas.height = window.innerHeight;
 
     set_size(canvas.width, canvas.height);
-
+    const imageData = new ImageData(pixels, width, height);
+    // datosImag.setData = pixels.map((v) => v);
+    ctx.putImageData(imageData, 0, 0)
     // console.log("C width:", get_width());
     // console.log("C height:", get_height());
 }
@@ -163,8 +167,7 @@ window.addEventListener('load', function () {
     //coloresRender = setColores(datos.maxIt, datos.colores);
 
     const imageData = new ImageData(pixels, width, height);
-    // datosImag.setData = pixels.map((v) => v);
-    ctx.putImageData(imageData, 0, 0)
+    ctx.putImageData(imageData, 0, 0);
     // canvas.focus();
 })
 
@@ -199,11 +202,14 @@ confirmarBtn.addEventListener('click', () => {
     datos.maxIt = Number(itInput.value);
     //console.log("BEFORE Max it: ", get_max_it());
     set_max_it(Number(itInput.value));
+    build_palette();
+    const imageData = new ImageData(pixels, width, height);
+    ctx.putImageData(imageData, 0, 0)
     //console.log("AFTER Max it: ", get_max_it());
-    coloresRender = setColores(datos.maxIt, datos.colores);
-    datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    ctx.putImageData(datosImag, 0, 0)
-    canvas.focus();
+    // coloresRender = setColores(datos.maxIt, datos.colores);
+    // datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
+    // ctx.putImageData(datosImag, 0, 0)
+    // canvas.focus();
 })
 
 // Cambio de colores
@@ -214,9 +220,12 @@ color1.addEventListener('change', function () {
     }
     // titulo.style.color = String(color1.value);
     //titulo.style.backgroundColor = String(color2.value);
-    datos.colores = [color1V, color2V];
-    coloresRender = setColores(datos.maxIt, datos.colores);
+    // datos.colores = [color1V, color2V];
+    // coloresRender = setColores(datos.maxIt, datos.colores);
     build_palette();
+    calc_pixel_buffer();
+    const imageData = new ImageData(pixels, width, height);
+    ctx.putImageData(imageData, 0, 0)
     // console.log("MACTI: ", get_max_it())
     // for (var i = 0; i < datos.maxIt; i++) {
     //     const pp = { r: get_palette_color_r(i), g: get_palette_color_g(i), b: get_palette_color_b(i) };
@@ -234,12 +243,16 @@ color2.addEventListener('change', function () {
     if (color2V) {
         set_color2(color2V.r, color2V.g, color2V.b)
     }
-    datos.colores = [color1V, color2V];
-    coloresRender = setColores(datos.maxIt, datos.colores);
     build_palette();
-    datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    ctx.putImageData(datosImag, 0, 0)
-    canvas.focus();
+    calc_pixel_buffer();
+    const imageData = new ImageData(pixels, width, height);
+    ctx.putImageData(imageData, 0, 0)
+    // datos.colores = [color1V, color2V];
+    // coloresRender = setColores(datos.maxIt, datos.colores);
+    // build_palette();
+    // datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
+    // ctx.putImageData(datosImag, 0, 0)
+    // canvas.focus();
 });
 
 
@@ -276,14 +289,22 @@ itInput.addEventListener('keypress', (event) => {
 sliderReal.addEventListener('change', function (event) {
     datos.cR = Number(event.target.value);
     real.value = datos.cR;
-    datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    ctx.putImageData(datosImag, 0, 0)
+    set_real(real.value);
+    calc_pixel_buffer();
+    const imageData = new ImageData(pixels, width, height);
+    ctx.putImageData(imageData, 0, 0);
+    // datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
+    // ctx.putImageData(datosImag, 0, 0)
 });
 sliderImag.addEventListener('change', function (event) {
     datos.cI = Number(event.target.value);
     imag.value = datos.cI;
-    datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    ctx.putImageData(datosImag, 0, 0)
+    set_imag(imag.value);
+    calc_pixel_buffer();
+    const imageData = new ImageData(pixels, width, height);
+    ctx.putImageData(imageData, 0, 0);
+    // datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
+    // ctx.putImageData(datosImag, 0, 0)
 });
 
 // Moviento
