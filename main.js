@@ -46,35 +46,8 @@ TODO:
     Agregar funcionalidad de ocultar paneles
     ORDEN DE CARGA DE LA PAGINA, buscar window events para asegurarse que carga bien
 */
-//WASM
-const fractalWasm = await fetch("./fractal.wasm");
-const bytes = await fractalWasm.arrayBuffer();
-const { instance } = await WebAssembly.instantiate(bytes);
-const result = instance.exports.add(2, 3);
-console.log("REsutaldo: ", result);
-console.log("INSTANCE: ", instance.exports)
-const { set_size, get_width, get_height, set_max_it, get_max_it } = instance.exports;
-
-function syncCanvasSize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    set_size(canvas.width, canvas.height);
-
-    // console.log("C width:", get_width());
-    // console.log("C height:", get_height());
-}
-
-syncCanvasSize();
-window.addEventListener("resize", syncCanvasSize);
-//WASM
 var width = window.innerWidth
 var height = window.innerHeight
-canvas.width = width;
-canvas.height = height;
-
-const datosImag = ctx.getImageData(0, 0, width, height);
-var data = datosImag.data;
 
 var color1V = hexToRgb(color1.value);
 var color2V = hexToRgb(color2.value);
@@ -89,16 +62,110 @@ var datos = {
 }
 var movV = 0;
 var movH = 0;
+//WASM
+
+function platform_log(message_ptr) {
+    const buffer = wasm.instance.exports.memory.buffer;
+    const message = cstr_by_ptr(buffer, message_ptr);
+    console.log(message);
+}
+const fractalWasm = await fetch("./fractal.wasm", {
+    env: {
+        platform_log
+    }
+});
+const bytes = await fractalWasm.arrayBuffer();
+const { instance } = await WebAssembly.instantiate(bytes);
+
+const {
+    set_max_it,
+    set_size,
+    set_color1,
+    set_color2,
+    build_palette,
+    calc_pixel_buffer,
+    get_pixel_buffer,
+    get_palette_color_r,
+    get_palette_color_g,
+    get_palette_color_b,
+    // get_max_it,
+    // get_width,
+    // get_height,
+} = instance.exports;
+const ptr = instance.exports.get_pixel_buffer();
+const pixels = new Uint8ClampedArray(
+    instance.exports.memory.buffer,
+    ptr,
+    width * height * 4
+);
+const clr = instance.exports.get_color_buffer();
+const clrs = new Uint8ClampedArray(
+    instance.exports.memory.buffer,
+    clr,
+    datos.maxIt
+)
+
+
+function syncCanvasSize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    set_size(canvas.width, canvas.height);
+
+    // console.log("C width:", get_width());
+    // console.log("C height:", get_height());
+}
+
+syncCanvasSize();
+window.addEventListener("resize", syncCanvasSize);
+//WASM
+
+canvas.width = width;
+canvas.height = height;
+
+const datosImag = ctx.getImageData(0, 0, width, height);
+var data = datosImag.data;
+
 
 var altoInicial = datos.anchoInicial * height / width;
 
 window.addEventListener('load', function () {
+    console.log("LOAD")
+    console.log("COLOR BUFFER LEN: ", clrs.length);
+    clrs.forEach((c, i) => {
+        const pp = { r: get_palette_color_r(i), g: get_palette_color_g(i), b: get_palette_color_b(i) };
+        console.log("COLOR FROM C: ", pp)
+    });
+    var width = window.innerWidth
+    var height = window.innerHeight
+    const [color1V, color2V] = datos.colores;
+    console.log("COLRI:; ", color1V, color2V)
+    //WASM
+    set_max_it(datos.maxIt);
+    set_size(width, height);
+    set_color1(color1V.r, color1V.g, color1V.b);
+    set_color2(color2V.r, color2V.g, color2V.b);
+    build_palette();
+    console.log("------------")
+    clrs.forEach((c, i) => {
+        const pp = { r: get_palette_color_r(i), g: get_palette_color_g(i), b: get_palette_color_b(i) };
+        console.log("COLOR FROM C: ", pp)
+    });
+    calc_pixel_buffer();
+    console.log("PX LEN: ", pixels.length);
+    //WASM
     //titulo.style.color = String(color1.value);
     //  titulo.style.backgroundColor = String(color2.value);
-    coloresRender = setColores(datos.maxIt, datos.colores)
-    datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    ctx.putImageData(datosImag, 0, 0)
-    canvas.focus();
+    // coloresRender = setColores(datos.maxIt, datos.colores)
+    // datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
+    // ctx.putImageData(datosImag, 0, 0)
+    // canvas.focus();
+    //coloresRender = setColores(datos.maxIt, datos.colores);
+
+    const imageData = new ImageData(pixels, width, height);
+    // datosImag.setData = pixels.map((v) => v);
+    ctx.putImageData(imageData, 0, 0)
+    // canvas.focus();
 })
 
 real.value = datos.cR;
@@ -142,14 +209,40 @@ confirmarBtn.addEventListener('click', () => {
 // Cambio de colores
 color1.addEventListener('change', function () {
     color1V = hexToRgb(color1.value);
+    if (color1V) {
+        set_color1(color1V.r, color1V.g, color1V.b)
+    }
     // titulo.style.color = String(color1.value);
     //titulo.style.backgroundColor = String(color2.value);
     datos.colores = [color1V, color2V];
     coloresRender = setColores(datos.maxIt, datos.colores);
+    build_palette();
+    // console.log("MACTI: ", get_max_it())
+    // for (var i = 0; i < datos.maxIt; i++) {
+    //     const pp = { r: get_palette_color_r(i), g: get_palette_color_g(i), b: get_palette_color_b(i) };
+    //     console.log("COLOR FROM C: ", pp)
+    // }
     datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
     ctx.putImageData(datosImag, 0, 0)
     canvas.focus();
-})
+});
+
+color2.addEventListener('change', function () {
+    //titulo.style.color = String(color1.value);
+    //titulo.style.backgroundColor = String(color2.value);
+    color2V = hexToRgb(color2.value);
+    if (color2V) {
+        set_color2(color2V.r, color2V.g, color2V.b)
+    }
+    datos.colores = [color1V, color2V];
+    coloresRender = setColores(datos.maxIt, datos.colores);
+    build_palette();
+    datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
+    ctx.putImageData(datosImag, 0, 0)
+    canvas.focus();
+});
+
+
 real.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
         datos.cR = Number(real.value)
@@ -177,17 +270,6 @@ itInput.addEventListener('keypress', (event) => {
         ctx.putImageData(datosImag, 0, 0)
         canvas.focus();
     }
-})
-
-color2.addEventListener('change', function () {
-    //titulo.style.color = String(color1.value);
-    //titulo.style.backgroundColor = String(color2.value);
-    color2V = hexToRgb(color2.value);
-    datos.colores = [color1V, color2V];
-    coloresRender = setColores(datos.maxIt, datos.colores);
-    datosImag.setData = renderizarCanvas(datos, altoInicial, movV, movH, coloresRender, 100, width, height, data);
-    ctx.putImageData(datosImag, 0, 0)
-    canvas.focus();
 })
 
 // Cambio de forma
@@ -311,7 +393,6 @@ function setColores(maxIteraciones, color) {
     }
 
     return colores;
-
 }
 
 //Devuelve un color, se puede implementar para que devuelva el array de dos colores
