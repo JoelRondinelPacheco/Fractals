@@ -1,15 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <header><h1>Fractal generator</h1></header>
-    <main class="main-container">
-      <canvas id="main-canvas" width="1000" height="800"></canvas>
-    </main>
 
-    <script src="script.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fractaly</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <section class="header-container">
+      <section class="header-title"><span id="title">FRACTALY</span>
+        <h1 class="subtitle">Fractal generator</h1>
+      </section>
+      <section class="header-social">
+        <div>
+          <a target="_blank" href="https://linkedin.com/in/joelrondinelpacheco">
+            <div class="icon icon-ln"></div>
+          </a>
+          <a target="_blank" href="https://github.com/JoelRondinelPacheco">
+            <div class="icon icon-gh"></div>
+          </a>
+        </div>
+        <div>
+          <h2 class="header-name">Joel Rondinel Pacheco</h2>
+        </div>
+      </section>
+    </section>
+  </header>
+  <main class="cMain">
+    <section class="menu-container">
+      <div class="container" id="opt">
+        <div class="title">
+          <div id="ocultarConfig">
+            <i id="ojo" class="fa-solid fa-eye-slash fa-xl"></i>
+          </div>
+          <h2>Options</h2>
+        </div>
+        <div class="options" id="options">
+          <div class="options options--menu">
+            <input class="options__color" id="color1" type="color" value="#000000" />
+            <input type="text" id="real" class="options__input" />
+            <div>
+              <input class="options__slider" id="sliderReal" type="range" min="-2" max="2" step="0.01" />
+            </div>
+          </div>
+          <div class="options options--menu">
+            <input class="options__color" id="color2" type="color" value="#F6D32D" />
+            <input type="text" id="imag" class="options__input" />
+
+            <input class="options__slider" id="sliderImag" type="range" min="-3" max="3" step="0.01" />
+          </div>
+        </div>
+        <div class="options options--menu" id="iteraciones">
+          <div class="options__iteraciones">
+            <div class="title">
+              <i class="fa-solid fa-rotate fa-xl"></i>
+              <h2>Iterations</h2>
+            </div>
+
+            <input class="options__input options__input--iteraciones" id="iteracionesInput" type="text" />
+            <button id="confBtn">Confirm</button>
+          </div>
+        </div>
+      </div>
+      <div class="container" id="nav">
+        <div class="title">
+          <h2>Navigation</h2>
+          <div id="ocultarNav">
+            <i id="ojoNav" class="fa-solid fa-eye-slash fa-xl"></i>
+          </div>
+        </div>
+        <div class="controls" id="controles">
+          <div class="controls__del" id="del">
+            <p>Del</p>
+          </div>
+          <div class="controls__up">
+            <i id="up" class="fa-solid fa-circle-arrow-up fa-3x"></i>
+          </div>
+          <div class="controls__other">
+            <i id="controls__left" class="fa-solid fa-circle-arrow-left fa-3x"></i>
+            <i id="controls__down" class="fa-solid fa-circle-arrow-down fa-3x"></i>
+            <i id="controls__right" class="fa-solid fa-circle-arrow-right fa-3x"></i>
+          </div>
+          <div class="controls__space" id="space">
+            <p>Space</p>
+          </div>
+        </div>
+        <div id="instructions">
+          <p>Arrows: Navigate</p>
+          <p>Space: Zoom In</p>
+          <p>Del: Zoom Out</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <canvas id="canvasF" tabindex="0"></canvas>
+
+  <script src="https://kit.fontawesome.com/a9ed0c9692.js" crossorigin="anonymous"></script>
+  <script src="js/wasm-runtime.js"></script>
+  <script src="fractal.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="main.js"></script>
+</body>
+
 </html>
